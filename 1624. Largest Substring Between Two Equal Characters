@@ -1,0 +1,23 @@
+//Brute force
+class Solution {
+    public int maxLengthBetweenEqualCharacters(String s) {
+        int maxLen = -1;
+        int n = s.length();
+        HashSet<Character> st = new HashSet<>();
+        for(int i=0;i<n-1;i++){
+            
+            st.add(s.charAt(i));
+            int temp = 0;
+            for(int j=i+1;j<n;j++){
+                if(!st.contains(s.charAt(j))){
+                    temp++;
+                }else{
+                    maxLen = Math.max(maxLen, temp);
+                    temp++;
+                }
+            }
+            st.remove(s.charAt(i));
+        }
+        return maxLen;
+    }
+}
