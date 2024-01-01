@@ -1,0 +1,18 @@
+//T.c : O(nlog(n))
+//S.c : O(1);
+
+class Solution {
+    public int findContentChildren(int[] g, int[] s) {
+        Arrays.sort(g);
+        Arrays.sort(s);
+        int k = 0;
+        int maxchildS = 0;
+        for(int i=0;k<g.length && i<s.length;i++){
+            if(g[k] <= s[i]){
+                maxchildS++;
+                k++;
+            }
+        }
+        return maxchildS;
+    }
+}
