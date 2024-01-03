@@ -1,5 +1,5 @@
-// Approach-01 - Optimal
-//T.c : O(N)
+// Approach-01 - (Brute Approach)
+//T.c : O(N*M)
 //S.c : O(N)
 
 class Solution {
