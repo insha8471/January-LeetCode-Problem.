@@ -23,3 +23,29 @@ class Solution {
         return laserBeam;
     }
 }
+
+**********************************************************************************************************************
+
+// Approach-02 - (Optimal Approach)
+//T.c : O(N*M)
+//S.c : O(1)
+
+
+class Solution {
+    public int numberOfBeams(String[] bank) {
+        int result = 0;
+        int prevBcount = 0;
+        for(String x : bank){
+            int currBcount = 0;
+            for(int i=0;i<x.length();i++){
+                if(x.charAt(i) == '1') currBcount++;
+            }
+            result += (prevBcount * currBcount);
+
+            if(currBcount != 0)
+                prevBcount = currBcount;
+        }
+        return result;
+    }
+}
+
