@@ -1,0 +1,25 @@
+// Approach-01 - Optimal
+//T.c : O(N)
+//S.c : O(N)
+
+class Solution {
+    public int numberOfBeams(String[] bank) {
+        ArrayList<Integer> ls = new ArrayList<>();
+        for(String x : bank){
+            int count = 0;
+            for(int i=0;i<x.length();i++){
+                if(x.charAt(i) == '1'){
+                    count++;
+                }
+            }
+            if(count > 0)
+                ls.add(count);
+        }
+        int laserBeam = 0;
+        for(int i=0;i<ls.size();i++){
+            if(i<ls.size()-1)
+                laserBeam += ls.get(i)*ls.get(i+1);
+        }
+        return laserBeam;
+    }
+}
