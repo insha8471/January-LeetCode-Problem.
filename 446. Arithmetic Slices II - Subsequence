@@ -1,0 +1,24 @@
+//Aproach DP by using array map to store the diff and frequency...
+//T.c : O(N^2)
+//T.c : O(N)
+
+class Solution {
+    public int numberOfArithmeticSlices(int[] nums) {
+        int n = nums.length;
+        int result = 0;
+        Map<Long, Integer>[] mp = new HashMap[n];
+        for(int i=0;i<n;i++){
+            mp[i] = new HashMap<>();
+            for(int j=0;j<i;j++){
+                long diff = (long)nums[i] - nums[j];
+                int count_j = mp[j].getOrDefault(diff, 0);
+
+                result += count_j;
+
+                //increment the count_j vaue
+                mp[i].put(diff, mp[i].getOrDefault(diff, 0)+count_j + 1);
+            }
+        }
+        return result;
+    }
+}
