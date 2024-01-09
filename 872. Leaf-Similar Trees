@@ -1,0 +1,23 @@
+//T.c : O(N)
+//t.c : O(N)
+
+
+class Solution {
+    public void leaf(TreeNode root, StringBuilder s){
+        if(root == null) return;
+        if(root.left==null && root.right==null){
+            s.append(root.val).append("_");
+            return;
+        }
+
+        leaf(root.left, s);
+        leaf(root.right, s);
+    }
+    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        StringBuilder s1 =new StringBuilder("");
+        StringBuilder s2 = new StringBuilder("");
+        leaf(root1, s1);
+        leaf(root2, s2);
+        return s1.toString().equals(s2.toString());
+    }
+}
