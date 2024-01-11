@@ -1,0 +1,88 @@
+//Approach 1 : Using queue and 2 hashmap. 1 to store the parent detail in hashmap and 2 to store the infected node with no of operation.
+//T.c : O(N)
+//S.c : O(N)
+class Solution {
+    public TreeNode getNode(TreeNode root, int start){
+        if(root == null) return null;
+        if(root.val == start) return root;
+        TreeNode left = getNode(root.left, start);
+        TreeNode right = getNode(root.right, start);
+        if(left == null) return right;
+        else return left;
+    }
+
+    public void preorder(TreeNode root, Map<TreeNode, TreeNode> p){
+        if(root == null) return;
+        if(root.left != null)  p.put(root.left, root);
+        if(root.right != null) p.put(root.right, root);
+        preorder(root.left, p);
+        preorder(root.right, p);
+    }
+    public int amountOfTime(TreeNode root, int start) {
+        TreeNode Node = getNode(root, start);
+        Map<TreeNode, TreeNode> p = new HashMap<>();
+        preorder(root,p);
+        //BFS
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(Node);
+        Map<TreeNode, Integer> v = new HashMap<>();
+        v.put(Node, 0);
+        while(q.size() > 0){
+            TreeNode temp = q.remove();
+            //int level = v.get(temp);
+            if(temp.left != null && !v.containsKey(temp.left)){
+                q.add(temp.left);
+                v.put(temp.left, v.get(temp)+1);
+            }
+
+            if(temp.right != null && !v.containsKey(temp.right)){
+                q.add(temp.right);
+                v.put(temp.right, v.get(temp)+1);
+            }
+
+            //check the parent
+            if(p.containsKey(temp) && !v.containsKey(p.get(temp))){
+                q.add(p.get(temp));
+                v.put(p.get(temp), v.get(temp)+1);
+            }
+        }
+        int max = -1;
+        for(int level : v.values()){
+            max = Math.max(max, level); 
+        }
+        return max;
+    }
+}
+
+
+****************************************************************************************************************************************************************
+
+Approach 2 : Optimal : no or operation is equal to height the tree from the infected start node.
+//T.c : O(N)
+//S.c : O(N) auxiliary space
+
+class Solution {
+    public int solve(TreeNode root, int start, int[] result){
+        if(root == null) return 0;
+        int lh = solve(root.left,start, result);
+        int rh = solve(root.right, start, result);
+
+        if(root.val == start){
+            result[0] = Math.max(lh, rh);
+            return -1;
+        }
+        else if(lh >= 0 && rh >= 0){
+            return Math.max(lh, rh)+1;
+        }else{
+            int d = Math.abs(lh) + Math.abs(rh);
+            result[0] = Math.max(result[0], d);
+            return Math.min(lh, rh) -1;
+        }
+    }
+    public int amountOfTime(TreeNode root, int start) {
+        int[] result = new int[1];
+        result[0] = Integer.MIN_VALUE;
+        solve(root,start, result);
+        return result[0];
+    }
+}
