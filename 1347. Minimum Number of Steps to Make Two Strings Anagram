@@ -1,0 +1,26 @@
+You are given two strings of the same length s and t. In one step you can choose any character of t and replace it with another character.
+Return the minimum number of steps to make t an anagram of s.
+
+//T.c : O(N)
+//S.c : O(N)
+
+
+class Solution {
+    public int minSteps(String s, String t) {
+        Map<Character, Integer> mp = new HashMap<>();
+
+        for(char x : s.toCharArray()){
+            mp.put(x, mp.getOrDefault(x, 0)+1);
+        }
+
+        int count = 0;
+        for(char x : t.toCharArray()){
+            if(mp.containsKey(x) && mp.get(x) > 0){
+                mp.put(x, mp.get(x)-1);
+            }else{
+                count++;
+            }
+        }
+        return count;
+    }
+}
