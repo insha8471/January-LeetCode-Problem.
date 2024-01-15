@@ -1,0 +1,77 @@
+//Approach Brute Force
+//T.c : O(NlogN);
+//S.c : O(N)
+
+class Solution {
+    public List<List<Integer>> findWinners(int[][] matches) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> win = new ArrayList<>();
+        List<Integer> loss = new ArrayList<>();
+
+        res.add(win);
+        res.add(loss);
+        Map<Integer, Integer> mp = new HashMap<>();
+        for(int i=0;i<matches.length;i++){
+            mp.put(matches[i][1], mp.getOrDefault(matches[i][1], 0) + 1);
+        }
+
+        for(int i=0;i<matches.length;i++){
+            if(!mp.containsKey(matches[i][0])){
+                res.get(0).add(matches[i][0]);
+                mp.put(matches[i][0], -1);
+            }
+            if(mp.get(matches[i][1]) == 1){
+                res.get(1).add(matches[i][1]);
+            }
+        }
+        Collections.sort(win);
+        Collections.sort(loss);
+        
+        return res;
+    }
+}
+
+
+
+*********************************************************************************************************
+//Aproach Optimal
+//T.c : O(N)
+//S.c : O(N)
+
+class Solution {
+    public List<List<Integer>> findWinners(int[][] matches) {
+        int[] losses = new int[100001];
+        for(int i=0;i<matches.length;i++){
+            int win = matches[i][0];
+            int loss = matches[i][1];
+
+            if(losses[win] == 0){
+                losses[win] = -1;
+            }
+
+            if(losses[loss] == -1){
+                losses[loss] = 1;
+            }else{
+                losses[loss]++;
+            }
+        }
+
+        List<Integer> onlyWin = new ArrayList<>();
+        List<Integer> oneLoss = new ArrayList<>();
+        for(int i=0;i<losses.length;i++){
+            if(losses[i] == -1){
+                onlyWin.add(i);
+            }
+
+            if(losses[i] == 1){
+                oneLoss.add(i);
+            }
+        }
+
+        List<List<Integer>> res = new ArrayList<>();
+        res.add(onlyWin);
+        res.add(oneLoss);
+
+        return res;
+    }
+}
