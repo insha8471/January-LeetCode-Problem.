@@ -1,0 +1,45 @@
+/*["RandomizedSet", "insert", "remove", "insert", "getRandom", "remove", "insert", "getRandom"]
+[[], [1], [2], [2], [], [1], [2], []]
+Output
+[null, true, false, true, 2, true, false, 2] */
+
+380. Insert Delete GetRandom O(1)
+
+
+class RandomizedSet {
+    public List<Integer> list;
+    public Map<Integer, Integer> mp;
+    public Random random;
+    public RandomizedSet() {
+        list = new ArrayList<>();
+        mp = new HashMap<>();
+        random = new Random();
+    }
+    
+    public boolean insert(int val) {
+        if(mp.containsKey(val)){
+            return false;
+        }
+        list.add(val);
+        mp.put(val, list.size()-1);
+        return true;        
+    }
+    
+    public boolean remove(int val) {
+        if(!mp.containsKey(val)){
+            return false;
+        }
+        int idx = mp.get(val);
+        int lastElement = list.get(list.size()-1);
+        list.set(idx, lastElement);
+        mp.put(lastElement, idx);
+        list.remove(list.size()-1);
+        mp.remove(val);
+        return true;
+    }
+    
+    public int getRandom() {
+        int idx = random.nextInt(list.size());
+        return list.get(idx);
+    }
+}
