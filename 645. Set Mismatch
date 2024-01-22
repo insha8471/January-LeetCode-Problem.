@@ -1,0 +1,36 @@
+You have a set of integers s, which originally contains all the numbers from 1 to n. Unfortunately,
+due to some error, 
+one of the numbers in s got duplicated to another number in the set, 
+which results in repetition of one number and loss of another number
+
+//T.c : O(N)
+//S.c : O(N)
+
+class Solution {
+    public int[] findErrorNums(int[] nums) {
+        int[] freq = new int[nums.length+1];
+        for(int x : nums){
+            freq[x]++;
+        }
+
+        List<Integer> ls = new ArrayList<>();
+        for(int i=1;i<freq.length;i++){
+            if(freq[i] > 1){
+                ls.add(0,i);
+            }else if(freq[i] == 0){
+                ls.add(i);
+            }
+        }
+
+
+        if(ls.size() != 0){
+            int[] res = new int[ls.size()];
+            int i = 0;
+            for(int x : ls){
+                res[i++] = x;
+            }
+            return res;
+        }
+        return nums;
+    }
+}
