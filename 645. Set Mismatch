@@ -34,3 +34,30 @@ class Solution {
         return nums;
     }
 }
+
+*************************************************************************************
+
+//T.c : O(N)
+//S.c : O(N)
+
+class Solution {
+    public int[] findErrorNums(int[] nums) {
+        Set<Integer> st = new HashSet<>();
+        int dV = 0;
+        int sum = 0;
+        for(int x : nums){
+            sum += x;
+            if(!st.contains(x)){
+                st.add(x);
+            }else{
+                dV = x;
+            }
+        }
+        int n = nums.length;
+        if(dV != 0){
+            int missNumber = (n*(n+1))/2 - (sum - dV);
+            return new int[] {dV, missNumber};
+        }
+        return nums;
+    }
+}
