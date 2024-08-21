@@ -1,4 +1,5 @@
 //Approach 1 : Using queue and 2 hashmap. 1 to store the parent detail in hashmap and 2 to store the infected node with no of operation.
+
 //T.c : O(N)
 //S.c : O(N)
 class Solution {
